@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        /* Additional styling for the success message */
+        .form-response {
+            display: none;
+            font-size: 1.2em;
+            color: #4CAF50; /* Green color for success message */
+        }
+        .form-response.success {
+            display: block;
+        }
+        .form-response.success::before {
+            content: "✓ "; /* Checkmark */
+        }
+    </style>
 </head>
 <body class="is-preload">
 
@@ -50,7 +64,7 @@
     <footer id="footer">
         <section>
             <!-- Formspree Form -->
-            <form action="https://formspree.io/f/xzzpakkb" method="POST">
+            <form id="contact-form" action="https://formspree.io/f/xzzpakkb" method="POST">
                 <div class="fields">
                     <div class="field">
                         <label for="name">Name</label>
@@ -69,6 +83,8 @@
                     <li><input type="submit" value="Send Message" /></li>
                 </ul>
             </form>
+            <!-- Response Message -->
+            <div id="form-response" class="form-response"></div>
         </section>
         <section class="split contact">
             <section>
@@ -104,6 +120,32 @@
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var form = event.target;
+    var formData = new FormData(form);
+    
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    }).then(function(response) {
+        if (response.ok) {
+            document.getElementById('form-response').innerText = 'Message Sent';
+            document.getElementById('form-response').classList.add('success');
+            form.reset(); // Reset the form fields
+        } else {
+            document.getElementById('form-response').innerText = 'Something went wrong. Please try again.';
+            document.getElementById('form-response').classList.remove('success');
+        }
+    }).catch(function(error) {
+        document.getElementById('form-response').innerText = 'Something went wrong. Please try again.';
+        document.getElementById('form-response').classList.remove('success');
+    });
+});
+</script>
 
 </body>
 </html>
