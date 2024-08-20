@@ -12,6 +12,7 @@
             display: none;
             font-size: 1.2em;
             color: #4CAF50; /* Green color for success message */
+            margin-top: 10px;
         }
         .form-response.success {
             display: block;
@@ -80,7 +81,7 @@
                     </div>
                 </div>
                 <ul class="actions">
-                    <li><input type="submit" value="Send Message" /></li>
+                    <li><input type="submit" value="Send Message" id="submit-button" /></li>
                 </ul>
             </form>
             <!-- Response Message -->
@@ -127,12 +128,14 @@ document.getElementById('contact-form').addEventListener('submit', function(even
 
     var form = event.target;
     var formData = new FormData(form);
+    var submitButton = document.getElementById('submit-button');
     
     fetch(form.action, {
         method: 'POST',
         body: formData
     }).then(function(response) {
         if (response.ok) {
+            submitButton.value = 'Message Sent';
             document.getElementById('form-response').innerText = 'Message Sent';
             document.getElementById('form-response').classList.add('success');
             form.reset(); // Reset the form fields
