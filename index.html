@@ -20,6 +20,14 @@
         .form-response.success::before {
             content: "✓ "; /* Checkmark */
         }
+
+        /* Style for disabled button */
+        .button-disabled {
+            background-color: #4CAF50; /* Green color for success */
+            color: white;
+            cursor: not-allowed;
+            border: none;
+        }
     </style>
 </head>
 <body class="is-preload">
@@ -136,6 +144,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     }).then(function(response) {
         if (response.ok) {
             submitButton.value = 'Message Sent';
+            submitButton.classList.add('button-disabled'); // Add class to style as disabled
             document.getElementById('form-response').innerText = 'Message Sent';
             document.getElementById('form-response').classList.add('success');
             form.reset(); // Reset the form fields
