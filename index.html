@@ -27,6 +27,7 @@
             color: white;
             cursor: not-allowed;
             border: none;
+            pointer-events: none; /* Ensure button is not clickable */
         }
     </style>
 </head>
@@ -137,6 +138,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     var form = event.target;
     var formData = new FormData(form);
     var submitButton = document.getElementById('submit-button');
+    var responseMessage = document.getElementById('form-response');
     
     fetch(form.action, {
         method: 'POST',
@@ -146,16 +148,19 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             submitButton.value = 'Message Sent';
             submitButton.disabled = true; // Make the button non-clickable
             submitButton.classList.add('button-disabled'); // Add class to style as disabled
-            document.getElementById('form-response').innerText = 'Message Sent';
-            document.getElementById('form-response').classList.add('success');
+            responseMessage.innerText = 'Message Sent';
+            responseMessage.classList.add('success');
+            responseMessage.style.display = 'block'; // Ensure the message box is visible
             form.reset(); // Reset the form fields
         } else {
-            document.getElementById('form-response').innerText = 'Something went wrong. Please try again.';
-            document.getElementById('form-response').classList.remove('success');
+            responseMessage.innerText = 'Something went wrong. Please try again.';
+            responseMessage.classList.remove('success');
+            responseMessage.style.display = 'block'; // Ensure the message box is visible
         }
     }).catch(function(error) {
-        document.getElementById('form-response').innerText = 'Something went wrong. Please try again.';
-        document.getElementById('form-response').classList.remove('success');
+        responseMessage.innerText = 'Something went wrong. Please try again.';
+        responseMessage.classList.remove('success');
+        responseMessage.style.display = 'block'; // Ensure the message box is visible
     });
 });
 </script>
